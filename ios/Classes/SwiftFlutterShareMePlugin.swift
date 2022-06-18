@@ -119,7 +119,11 @@ public class SwiftFlutterShareMePlugin: NSObject, FlutterPlugin, SharingDelegate
                     } else {
                         urlData = image!.jpegData(compressionQuality: 1.0)!
                     }
-                    filePath=URL(fileURLWithPath:NSHomeDirectory()).appendingPathComponent("Documents/whatsAppTmp.wai")
+                    if (FileManager.default.fileExists(atPath: imageUrl)) {
+                        filePath = imageUrl
+                    } else {
+                        filePath=URL(fileURLWithPath:NSHomeDirectory()).appendingPathComponent("Documents/whatsAppTmp.wai")
+                    }
                 }else{
                     filePath=URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("video.m4v")
                     urlData = NSData(contentsOf: URL(fileURLWithPath: imageUrl))! as Data
