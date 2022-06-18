@@ -114,10 +114,10 @@ public class SwiftFlutterShareMePlugin: NSObject, FlutterPlugin, SharingDelegate
                         return;
                     }
                     //urlData=UIImageJPEGRepresentation(image!, 1.0)!
-                    if (type=="image") {
-                        urlData = image!.jpegData(compressionQuality: 1.0)!
-                    } else if (type == "gif") {
+                    if (type == "gif") {
                         urlData = FileManager.default.contents(atPath: imageUrl)!
+                    } else {
+                        urlData = image!.jpegData(compressionQuality: 1.0)!
                     }
                     filePath=URL(fileURLWithPath:NSHomeDirectory()).appendingPathComponent("Documents/whatsAppTmp.wai")
                 }else{
