@@ -32,6 +32,8 @@ class FlutterShareMe {
     arguments.putIfAbsent('url', () => imagePath);
     if (fileType == FileType.image) {
       arguments.putIfAbsent('fileType', () => 'image');
+    } else if (fileType == FileType.gif) {
+      arguments.putIfAbsent('fileType', () => 'gif');
     } else {
       arguments.putIfAbsent('fileType', () => 'video');
     }
@@ -118,19 +120,20 @@ class FlutterShareMe {
   }
 
   ///share to messenger
-  Future<String?> shareToMessenger({required String msg, String url = ''}) async {
+  Future<String?> shareToMessenger(
+      {required String msg, String url = ''}) async {
     final Map<String, dynamic> arguments = <String, dynamic>{};
     arguments.putIfAbsent('msg', () => msg);
     arguments.putIfAbsent('url', () => url);
     String? result;
     try {
-      result = await _channel.invokeMethod<String?>(_methodMessenger, arguments);
+      result =
+          await _channel.invokeMethod<String?>(_methodMessenger, arguments);
     } catch (e) {
       return e.toString();
     }
     return result;
   }
-
 
   ///share to twitter
   ///[msg] string that you want share.
