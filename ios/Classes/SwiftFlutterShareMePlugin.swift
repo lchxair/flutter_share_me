@@ -107,14 +107,18 @@ public class SwiftFlutterShareMePlugin: NSObject, FlutterPlugin, SharingDelegate
                 let viewController = UIApplication.shared.delegate?.window??.rootViewController
                 let urlData:Data
                 let filePath:URL
-                if(type=="image"){
+                if(type=="image" || type=="gif"){
                     let image = UIImage(named: imageUrl)
                     if(image==nil){
                         result("File format not supported Please check the file.")
                         return;
                     }
                     //urlData=UIImageJPEGRepresentation(image!, 1.0)!
-                    urlData = image!.jpegData(compressionQuality: 1.0)!
+                    if (type=="image") {
+                        urlData = image!.jpegData(compressionQuality: 1.0)!
+                    } else if (type == "gif") {
+                        urlData = image!.gifData(compressionQuality: 1.0)!
+                    }
                     filePath=URL(fileURLWithPath:NSHomeDirectory()).appendingPathComponent("Documents/whatsAppTmp.wai")
                 }else{
                     filePath=URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("video.m4v")
